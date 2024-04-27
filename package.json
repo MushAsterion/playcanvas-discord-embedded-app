@@ -1,6 +1,6 @@
 {
-    "name": "discord-embedded-app",
-    "version": "0.0.0",
+    "name": "playcanvas-discord-embedded-app",
+    "version": "0.0.1",
     "private": true,
     "scripts": {
         "dev": "next dev",
