@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import { useEffect } from 'react';
+import { DiscordSDK } from '@discord/embedded-app-sdk';
 
 function addScript(src) {
     return new Promise((resolve, reject) => {
@@ -10,7 +11,6 @@ function addScript(src) {
         script.addEventListener('load', resolve);
         script.addEventListener('error', reject);
         document.body.appendChild(script);
-        return script;
     });
 }
 
@@ -18,7 +18,31 @@ export default function Home() {
     useEffect(() => {
         (async () => {
             document.body.style.backgroundColor = '#000';
+            const discordSdk = new DiscordSDK(process.env.NEXT_PUBLIC_DISCORD_APP_CLIENT_ID);
 
+            await discordSdk.ready();
+
+            const { code } = await discordSdk.commands.authorize({
+                client_id: process.env.NEXT_PUBLIC_DISCORD_APP_CLIENT_ID,
+                response_type: 'code',
+                state: '',
+                prompt: 'none',
+                scope: ['identify', 'guilds']
+            });
+
+            const { access_token } = await fetch('/api/token', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ code })
+            }).then(r => r.json());
+
+            window.auth = await discordSdk.commands.authenticate({ access_token });
+
+            if (!window.auth) {
+                throw new Error('Authenticate command failed');
+            }
+
+            window.discordSdk = discordSdk;
             await addScript('__start__.js');
             await addScript('__loading__.js');
         })();
@@ -30,7 +54,6 @@ export default function Home() {
             <meta charSet="utf-8" />
             <link rel="manifest" href="manifest.json" />
             <style></style>
-            <title>Discord Roll a ball</title>
         </Head>
     );
 }
