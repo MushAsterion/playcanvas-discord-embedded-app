@@ -51,9 +51,6 @@ export default function Home() {
     return (
         <Head>
             <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover" />
-            <meta charSet="utf-8" />
-            <link rel="manifest" href="manifest.json" />
-            <style></style>
         </Head>
     );
 }

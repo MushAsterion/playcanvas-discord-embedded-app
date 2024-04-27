@@ -4,6 +4,9 @@ export default function Document() {
     return (
         <Html lang="en">
             <Head>
+                <meta charSet="utf-8" />
+                <link rel="manifest" href="manifest.json" />
+                <style></style>
                 <link rel="stylesheet" type="text/css" href="styles.css" />
                 <script src="playcanvas-stable.min.js"></script>
                 <script src="__settings__.js"></script>
