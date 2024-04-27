@@ -17,7 +17,7 @@ function addScript(src) {
 export default function Home() {
     useEffect(() => {
         (async () => {
-            document.body.style.backgroundColor = '#000';
+            document.body.style.background = process.env.NEXT_PUBLIC_DISCORD_AUTH_BACKGROUND || '#000';
             const discordSdk = new DiscordSDK(process.env.NEXT_PUBLIC_DISCORD_APP_CLIENT_ID);
 
             await discordSdk.ready();
