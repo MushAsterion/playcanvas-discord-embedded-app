@@ -36,9 +36,9 @@ export default function Home() {
                 body: JSON.stringify({ code })
             }).then(r => r.json());
 
-            window.auth = await discordSdk.commands.authenticate({ access_token });
+            window.discordSdkAuth = await discordSdk.commands.authenticate({ access_token });
 
-            if (!window.auth) {
+            if (!window.discordSdkAuth) {
                 throw new Error('Authenticate command failed');
             }
 
